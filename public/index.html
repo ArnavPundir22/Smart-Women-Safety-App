@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Women Safety</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+  <style>
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c9302c;
+    }
+  </style>
+</head>
+<body>
+    <div class="app-title">SHEro Shield</div>
+  <div class="container">
+    <h1>Smart Women Safety</h1>
+    <p>🎤 Voice-activated emergency alert is always listening. Say <b>"help"</b> or <b>"emergency"</b> anytime.</p>
+    <button onclick="stopVoiceAndExit()">🛑 Stop Voice Alert & Exit</button>
+  </div>  
+
+  <script>
+    let recognition;
+
+    function sendAlert() {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const data = {
+          user_id: "1", // hardcoded for now
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        };
+
+        fetch('/send-alert', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(res => alert(res.message));
+      });
+    }
+
+    function startVoiceActivation() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Your browser doesn't support voice recognition.");
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+      console.log("🎤 Voice activation running...");
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+        console.log('Heard:', transcript);
+
+        if (transcript.includes("help") || transcript.includes("emergency")) {
+          sendAlert();
+          alert("🚨 Emergency alert triggered by voice!");
+        }
+      };
+
+      recognition.onerror = function(event) {
+        console.error("Voice recognition error:", event.error);
+        recognition.stop();
+        setTimeout(startVoiceActivation, 1000);
+      };
+
+      recognition.onend = () => {
+        console.log("🔁 Voice recognition ended. Restarting...");
+        startVoiceActivation();
+      };
+    }
+
+    function stopVoiceAndExit() {
+      if (recognition) {
+        recognition.onend = null;
+        recognition.stop();
+        console.log("🛑 Voice recognition stopped.");
+      }
+
+      alert("Voice alert deactivated. Exiting...");
+      // You can redirect to another page, logout, or attempt to close tab:
+      // window.location.href = '/'; // go back to home or logout
+      window.open('', '_self', ''); // workaround to allow tab close
+      window.close(); // may not work in all browsers unless opened by script
+    }
+
+    // Start automatically on page load
+    window.onload = function() {
+      startVoiceActivation();
+    };
+  </script>
+</body>
+</html>
+

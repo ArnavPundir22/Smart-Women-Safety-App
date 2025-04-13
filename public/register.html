@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <form action="/register" method="POST">
+    <input type="text" name="username" placeholder="Username" required /><br />
+    <input type="email" name="email" placeholder="Email" required /><br />
+    <input type="password" name="password" placeholder="Password" required /><br />
+    
+    <!-- New Field to Enter Alert Details -->
+    <textarea name="alertDetails" placeholder="username,email,password (for alert)" rows="3" cols="30" required></textarea><br />
+
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="/">Login</a></p>
+</body>
+</html>
+

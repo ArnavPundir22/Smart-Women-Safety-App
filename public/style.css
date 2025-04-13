@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('bg1.png') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    animation: fadeInBody 1.5s ease-in;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px 60px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+    animation: popIn 1s ease-in-out forwards;
+    margin-bottom: 40px;
+}
+
+button {
+    background-color: #d81b60;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #ad1457;
+    transform: scale(1.05);
+}
+
+/* Gradient Box */
+.gradient-container {
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    height: 16rem;
+    margin-top: 20px;
+}
+
+.gradient-shadow {
+    position: absolute;
+    inset: -8px;
+    border-radius: 0.5rem;
+    background: linear-gradient(to left, #8b5cf6, #57534e, #d946ef);
+    opacity: 0.5;
+    filter: blur(20px);
+    z-index: 0;
+}
+
+.gradient-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #18181b;
+    border: 1px solid #3f3f46;
+    border-radius: 0.5rem;
+    color: #cbd5e1;
+    font-size: 3.50 rem;
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeInBody {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+ .app-title {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 50px;
+      font-weight: bold;
+      color: white;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+
